@@ -1,0 +1,15 @@
+venv312/
+
+__pycache__/
+
+*.pkl
+
+*.joblib
+
+.env
+
+artifacts/models/
+
+artifacts/vectorstore/
+
+data/raw/
