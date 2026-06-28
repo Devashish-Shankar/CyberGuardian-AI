@@ -1,0 +1,134 @@
+{
+  "DDoS": {
+    "mitre_id": "T1498",
+    "mitre_name": "Network Denial of Service",
+    "severity": "Critical",
+    "description": "Floods a target system with excessive traffic to exhaust network or application resources.",
+    "impact": [
+      "Service disruption",
+      "High bandwidth consumption",
+      "Business downtime"
+    ],
+    "recommendations": [
+      "Block malicious IP addresses",
+      "Enable rate limiting",
+      "Deploy Web Application Firewall",
+      "Enable DDoS protection"
+    ]
+  },
+
+  "DoS Hulk": {
+    "mitre_id": "T1499",
+    "mitre_name": "Endpoint Denial of Service",
+    "severity": "High",
+    "description": "Large number of HTTP requests generated to overwhelm a web server.",
+    "impact": [
+      "CPU exhaustion",
+      "Memory exhaustion",
+      "Web server downtime"
+    ],
+    "recommendations": [
+      "Rate limit requests",
+      "Enable CAPTCHA",
+      "Deploy WAF"
+    ]
+  },
+
+  "PortScan": {
+    "mitre_id": "T1046",
+    "mitre_name": "Network Service Discovery",
+    "severity": "Medium",
+    "description": "Attacker scans multiple ports to discover vulnerable services.",
+    "impact": [
+      "Reconnaissance",
+      "Exposure of vulnerable services"
+    ],
+    "recommendations": [
+      "Block suspicious IPs",
+      "Close unused ports",
+      "Enable IDS alerts"
+    ]
+  },
+
+  "SSH-Patator": {
+    "mitre_id": "T1110",
+    "mitre_name": "Brute Force",
+    "severity": "High",
+    "description": "Repeated SSH login attempts using multiple passwords.",
+    "impact": [
+      "Credential compromise",
+      "Unauthorized access"
+    ],
+    "recommendations": [
+      "Enable MFA",
+      "Lock account after failed attempts",
+      "Restrict SSH access"
+    ]
+  },
+
+  "FTP-Patator": {
+    "mitre_id": "T1110",
+    "mitre_name": "Brute Force",
+    "severity": "High",
+    "description": "Repeated FTP authentication attempts.",
+    "impact": [
+      "Credential theft",
+      "Data leakage"
+    ],
+    "recommendations": [
+      "Disable anonymous FTP",
+      "Use strong passwords",
+      "Monitor login attempts"
+    ]
+  },
+
+  "Bot": {
+    "mitre_id": "T1105",
+    "mitre_name": "Ingress Tool Transfer",
+    "severity": "High",
+    "description": "Compromised host communicating with command-and-control infrastructure.",
+    "impact": [
+      "Remote execution",
+      "Malware download",
+      "Botnet participation"
+    ],
+    "recommendations": [
+      "Disconnect infected host",
+      "Block C2 communication",
+      "Run malware scan"
+    ]
+  },
+
+  "Web Attack Brute Force": {
+    "mitre_id": "T1110",
+    "mitre_name": "Brute Force",
+    "severity": "High",
+    "description": "Password guessing attack against a web application.",
+    "impact": [
+      "Credential compromise",
+      "Account takeover"
+    ],
+    "recommendations": [
+      "Enable MFA",
+      "Rate limit login attempts",
+      "Use CAPTCHA"
+    ]
+  },
+
+  "Web Attack XSS": {
+    "mitre_id": "T1059",
+    "mitre_name": "Command and Scripting Interpreter",
+    "severity": "Medium",
+    "description": "Cross-Site Scripting attack attempting client-side code execution.",
+    "impact": [
+      "Session hijacking",
+      "Cookie theft",
+      "Malicious script execution"
+    ],
+    "recommendations": [
+      "Sanitize user input",
+      "Use Content Security Policy",
+      "Validate HTML output"
+    ]
+  }
+}

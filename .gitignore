@@ -13,3 +13,5 @@ artifacts/models/
 artifacts/vectorstore/
 
 data/raw/
+
+data/processed/
