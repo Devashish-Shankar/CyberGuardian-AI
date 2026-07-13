@@ -1,0 +1,873 @@
+{
+  "Benign": {
+    "category": "Normal Network Traffic",
+    "severity": "None",
+    "description": "Legitimate network communication that does not exhibit malicious behavior. This traffic represents normal user activity and expected application communication.",
+    "symptoms": [
+      "Stable packet rate",
+      "Normal bandwidth utilization",
+      "Successful TCP handshakes",
+      "Expected request patterns",
+      "No abnormal payloads",
+      "Normal session duration"
+    ],
+    "impact": "No security impact. Represents healthy network behavior.",
+    "detection": [
+      "Traffic volume within baseline",
+      "Normal protocol distribution",
+      "Expected packet sizes",
+      "No anomaly detected",
+      "No IDS/IPS alerts"
+    ],
+    "mitigation": [
+      "No action required",
+      "Continue monitoring",
+      "Maintain baseline profiles"
+    ],
+    "mitre_attack": [],
+    "ports": [
+      "Any"
+    ],
+    "protocols": [
+      "TCP",
+      "UDP",
+      "ICMP",
+      "HTTP",
+      "HTTPS",
+      "DNS"
+    ],
+    "ioc": [],
+    "references": [
+      "https://attack.mitre.org/",
+      "https://www.cisa.gov/"
+    ]
+  },
+
+  "DDoS": {
+    "category": "Distributed Denial of Service",
+    "severity": "Critical",
+    "description": "A Distributed Denial of Service attack overwhelms a target service using traffic generated from many compromised hosts simultaneously, preventing legitimate users from accessing services.",
+    "symptoms": [
+      "Massive traffic spike",
+      "High bandwidth consumption",
+      "CPU utilization near 100%",
+      "Memory exhaustion",
+      "Network congestion",
+      "Service timeout",
+      "Server becomes unreachable"
+    ],
+    "impact": "Business disruption, financial loss, service outage, degraded customer experience and possible infrastructure failure.",
+    "detection": [
+      "Sudden increase in packets per second",
+      "Thousands of unique source IP addresses",
+      "Large SYN or HTTP request rate",
+      "Abnormally high concurrent connections",
+      "IDS DDoS signatures triggered"
+    ],
+    "mitigation": [
+      "Enable DDoS protection service",
+      "Apply rate limiting",
+      "Use Anycast routing",
+      "Deploy Web Application Firewall",
+      "Filter malicious IP addresses",
+      "Use CDN protection",
+      "Scale infrastructure automatically"
+    ],
+    "mitre_attack": [
+      "T1498"
+    ],
+    "ports": [
+      "80",
+      "443"
+    ],
+    "protocols": [
+      "TCP",
+      "UDP",
+      "HTTP",
+      "HTTPS"
+    ],
+    "ioc": [
+      "Traffic spike",
+      "Large number of source IPs",
+      "Repeated HTTP requests",
+      "High SYN packet count",
+      "Network saturation"
+    ],
+    "references": [
+      "https://attack.mitre.org/techniques/T1498/",
+      "https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/",
+      "https://www.cisa.gov/"
+    ]
+  },
+
+  "DoS Hulk": {
+    "category": "Denial of Service",
+    "severity": "High",
+    "description": "DoS Hulk is an HTTP flooding attack that rapidly generates a massive number of unique HTTP GET requests to exhaust web server resources. Unlike traditional HTTP floods, Hulk continuously modifies request parameters, making caching ineffective.",
+    "symptoms": [
+      "Extremely high HTTP GET request rate",
+      "Rapid CPU utilization",
+      "High memory usage",
+      "Large number of concurrent sessions",
+      "Web server response delays",
+      "Increased request queue length"
+    ],
+    "impact": "Web application becomes slow or unavailable, causing denial of service for legitimate users.",
+    "detection": [
+      "Abnormally high HTTP GET requests",
+      "Large number of unique URLs",
+      "High requests per second",
+      "Web server logs showing repetitive patterns",
+      "Sudden increase in active connections"
+    ],
+    "mitigation": [
+      "Enable Web Application Firewall",
+      "Configure HTTP rate limiting",
+      "Deploy reverse proxy",
+      "Enable CDN caching",
+      "Block malicious IP addresses",
+      "Monitor abnormal web traffic"
+    ],
+    "mitre_attack": [
+      "T1499"
+    ],
+    "ports": [
+      "80",
+      "443"
+    ],
+    "protocols": [
+      "HTTP",
+      "HTTPS",
+      "TCP"
+    ],
+    "ioc": [
+      "Thousands of HTTP GET requests",
+      "High request frequency",
+      "Unique URL generation",
+      "Large active session count",
+      "Rapid increase in CPU utilization"
+    ],
+    "references": [
+      "https://attack.mitre.org/techniques/T1499/",
+      "https://owasp.org/",
+      "https://www.cisa.gov/"
+    ]
+  },
+
+  "DoS GoldenEye": {
+    "category": "Denial of Service",
+    "severity": "High",
+    "description": "GoldenEye is an application-layer HTTP DoS attack that creates numerous persistent HTTP connections and continuously sends requests to consume server resources until legitimate users are unable to connect.",
+    "symptoms": [
+      "Large number of HTTP connections",
+      "Persistent TCP sessions",
+      "Slow web server response",
+      "High socket utilization",
+      "Connection timeout increase",
+      "Thread pool exhaustion"
+    ],
+    "impact": "Web services become unavailable due to resource exhaustion, resulting in degraded performance and service outages.",
+    "detection": [
+      "Large number of persistent HTTP connections",
+      "Abnormal keep-alive sessions",
+      "High number of concurrent clients",
+      "Increased response latency",
+      "Web server resource exhaustion"
+    ],
+    "mitigation": [
+      "Configure connection timeout",
+      "Enable request filtering",
+      "Deploy reverse proxy",
+      "Enable Web Application Firewall",
+      "Use load balancing",
+      "Monitor abnormal HTTP sessions"
+    ],
+    "mitre_attack": [
+      "T1499"
+    ],
+    "ports": [
+      "80",
+      "443"
+    ],
+    "protocols": [
+      "HTTP",
+      "HTTPS",
+      "TCP"
+    ],
+    "ioc": [
+      "Persistent HTTP sessions",
+      "High number of keep-alive connections",
+      "Repeated web requests",
+      "Slow server response",
+      "Connection pool exhaustion"
+    ],
+    "references": [
+      "https://attack.mitre.org/techniques/T1499/",
+      "https://owasp.org/",
+      "https://www.cisa.gov/"
+    ]
+  },
+
+  "DoS Slowloris": {
+    "category": "Denial of Service",
+
+    "severity": "High",
+
+    "description": "Slowloris is a low-bandwidth denial-of-service attack that keeps multiple HTTP connections open by sending partial HTTP requests, exhausting the web server's connection pool.",
+
+    "symptoms": [
+      "Large number of half-open HTTP connections",
+      "Slow server response",
+      "Increasing connection timeout",
+      "High number of idle sessions",
+      "Web application becomes unavailable"
+    ],
+
+    "impact": "Legitimate users are unable to establish new connections because available HTTP connections are exhausted.",
+
+    "detection": [
+      "Numerous incomplete HTTP headers",
+      "Long-lived TCP sessions",
+      "High number of idle HTTP connections",
+      "Repeated partial HTTP requests",
+      "Unusually long session duration"
+    ],
+
+    "mitigation": [
+      "Reduce HTTP timeout values",
+      "Limit concurrent client connections",
+      "Deploy Web Application Firewall",
+      "Use reverse proxy",
+      "Monitor abnormal session duration"
+    ],
+
+    "mitre_attack": [
+      "T1499"
+    ],
+
+    "ports": [
+      "80",
+      "443"
+    ],
+
+    "protocols": [
+      "HTTP",
+      "HTTPS",
+      "TCP"
+    ],
+
+    "ioc": [
+      "Incomplete HTTP headers",
+      "Persistent idle connections",
+      "Very slow HTTP requests",
+      "Large number of active sockets"
+    ],
+
+    "references": [
+      "https://attack.mitre.org/techniques/T1499/",
+      "https://owasp.org/",
+      "https://www.cisa.gov/"
+    ]
+  },
+  
+  "DoS Slowhttptest": {
+    "category": "Denial of Service",
+
+    "severity": "High",
+
+    "description": "Slow HTTP Test performs denial-of-service attacks by sending HTTP requests extremely slowly, consuming server resources while using very little bandwidth.",
+
+    "symptoms": [
+      "Long HTTP request duration",
+      "Numerous idle HTTP sessions",
+      "Server thread exhaustion",
+      "Increasing response latency",
+      "Connection pool saturation"
+    ],
+
+    "impact": "The web server becomes unavailable for legitimate clients due to exhausted connection resources.",
+
+    "detection": [
+      "Slow HTTP POST requests",
+      "Large number of long-lived sessions",
+      "Abnormally low request rate per connection",
+      "Repeated incomplete HTTP requests"
+    ],
+
+    "mitigation": [
+      "Configure request timeout",
+      "Deploy reverse proxy",
+      "Enable Web Application Firewall",
+      "Limit maximum concurrent sessions",
+      "Use rate limiting"
+    ],
+
+    "mitre_attack": [
+      "T1499"
+    ],
+
+    "ports": [
+      "80",
+      "443"
+    ],
+
+    "protocols": [
+      "HTTP",
+      "HTTPS",
+      "TCP"
+    ],
+
+    "ioc": [
+      "Slow HTTP requests",
+      "Incomplete POST requests",
+      "Persistent HTTP sessions",
+      "Thread pool exhaustion"
+    ],
+
+    "references": [
+      "https://attack.mitre.org/techniques/T1499/",
+      "https://owasp.org/",
+      "https://www.cisa.gov/"
+    ]
+  },
+  
+  "PortScan": {
+    "category": "Reconnaissance",
+
+    "severity": "Medium",
+
+    "description": "Port scanning is a reconnaissance technique used to identify open ports, services and potential attack surfaces on target systems before launching further attacks.",
+
+    "symptoms": [
+      "Sequential connection attempts",
+      "Large number of destination ports",
+      "Frequent SYN packets",
+      "Short-lived TCP sessions",
+      "High connection attempts"
+    ],
+
+    "impact": "Information disclosure about available services that may assist attackers during later stages of an intrusion.",
+
+    "detection": [
+      "One source IP scanning multiple ports",
+      "Rapid SYN packet generation",
+      "Many failed connection attempts",
+      "Short session duration",
+      "Abnormal port access pattern"
+    ],
+
+    "mitigation": [
+      "Restrict unnecessary open ports",
+      "Deploy Intrusion Detection System",
+      "Configure firewall rules",
+      "Enable port scan detection",
+      "Monitor network reconnaissance"
+    ],
+
+    "mitre_attack": [
+      "T1046"
+    ],
+
+    "ports": [
+      "Any"
+    ],
+
+    "protocols": [
+      "TCP",
+      "UDP",
+      "ICMP"
+    ],
+
+    "ioc": [
+      "Multiple destination ports",
+      "Rapid SYN packets",
+      "Numerous failed TCP connections",
+      "Short network flows"
+    ],
+
+    "references": [
+      "https://attack.mitre.org/techniques/T1046/",
+      "https://www.cisa.gov/",
+      "https://owasp.org/"
+    ]
+  },
+
+  "Bot": {
+    "category": "Botnet",
+
+    "severity": "Critical",
+
+    "description": "A bot attack involves compromised systems (bots) that are remotely controlled by a command-and-control (C2) server. Bots are commonly used for DDoS attacks, spam campaigns, credential theft, malware distribution, and reconnaissance.",
+
+    "symptoms": [
+      "Frequent outbound connections",
+      "Communication with unknown remote hosts",
+      "Periodic beaconing activity",
+      "Abnormal network traffic",
+      "Unexpected background processes"
+    ],
+
+    "impact": "Compromised systems may become part of a botnet, enabling attackers to launch large-scale cyber attacks or steal sensitive information.",
+
+    "detection": [
+      "Regular beaconing to external IP addresses",
+      "Connections to known malicious domains",
+      "Abnormal outbound traffic",
+      "Repeated DNS lookups",
+      "Communication with C2 infrastructure"
+    ],
+
+    "mitigation": [
+      "Isolate infected hosts",
+      "Block command-and-control servers",
+      "Update antivirus signatures",
+      "Apply security patches",
+      "Monitor outbound traffic"
+    ],
+
+    "mitre_attack": [
+      "T1071",
+      "T1105"
+    ],
+
+    "ports": [
+      "80",
+      "443",
+      "53"
+    ],
+
+    "protocols": [
+      "HTTP",
+      "HTTPS",
+      "DNS",
+      "TCP"
+    ],
+
+    "ioc": [
+      "Periodic outbound beaconing",
+      "Unknown external connections",
+      "Suspicious DNS requests",
+      "Communication with known malicious IPs"
+    ],
+
+    "references": [
+      "https://attack.mitre.org/",
+      "https://www.cisa.gov/",
+      "https://owasp.org/"
+    ]
+  },
+  
+  "FTP-Patator": {
+    "category": "Credential Access",
+
+    "severity": "High",
+
+    "description": "FTP-Patator performs automated brute-force attacks against FTP services by repeatedly attempting different username and password combinations until valid credentials are found.",
+
+    "symptoms": [
+      "Repeated FTP login failures",
+      "Large number of authentication attempts",
+      "Short intervals between login requests",
+      "Same source IP performing multiple logins"
+    ],
+
+    "impact": "Successful attacks may result in unauthorized access, data theft, or further compromise of internal systems.",
+
+    "detection": [
+      "High number of failed FTP logins",
+      "Repeated authentication attempts",
+      "Account lockout events",
+      "Brute-force login pattern"
+    ],
+
+    "mitigation": [
+      "Enable account lockout policies",
+      "Use strong passwords",
+      "Implement multi-factor authentication",
+      "Restrict FTP access",
+      "Monitor authentication logs"
+    ],
+
+    "mitre_attack": [
+      "T1110"
+    ],
+
+    "ports": [
+      "21"
+    ],
+
+    "protocols": [
+      "FTP",
+      "TCP"
+    ],
+
+    "ioc": [
+      "Multiple failed FTP logins",
+      "Repeated authentication attempts",
+      "High login frequency",
+      "Single IP targeting multiple accounts"
+    ],
+
+    "references": [
+      "https://attack.mitre.org/techniques/T1110/",
+      "https://www.cisa.gov/",
+      "https://owasp.org/"
+    ]
+  },
+  
+  "SSH-Patator": {
+    "category": "Credential Access",
+
+    "severity": "High",
+
+    "description": "SSH-Patator is an automated brute-force attack against SSH services that repeatedly attempts authentication using different username and password combinations.",
+
+    "symptoms": [
+      "Numerous failed SSH logins",
+      "Repeated authentication attempts",
+      "High login frequency",
+      "Short intervals between SSH sessions"
+    ],
+
+    "impact": "Successful compromise allows attackers to gain remote shell access, perform lateral movement, and execute malicious commands.",
+
+    "detection": [
+      "Repeated failed SSH authentication",
+      "Large number of login attempts",
+      "Single IP targeting multiple accounts",
+      "Abnormal SSH session creation"
+    ],
+
+    "mitigation": [
+      "Enable multi-factor authentication",
+      "Disable password authentication",
+      "Use SSH key authentication",
+      "Limit login attempts",
+      "Deploy Fail2Ban",
+      "Monitor SSH authentication logs"
+    ],
+
+    "mitre_attack": [
+      "T1110"
+    ],
+
+    "ports": [
+      "22"
+    ],
+
+    "protocols": [
+      "SSH",
+      "TCP"
+    ],
+
+    "ioc": [
+      "Repeated failed SSH logins",
+      "Authentication failures",
+      "Brute-force login attempts",
+      "High SSH connection rate"
+    ],
+
+    "references": [
+      "https://attack.mitre.org/techniques/T1110/",
+      "https://www.cisa.gov/",
+      "https://owasp.org/"
+    ]
+  },
+
+  "Web Attack Brute Force": {
+    "category": "Credential Access",
+
+    "severity": "High",
+
+    "description": "A web brute force attack repeatedly attempts different username and password combinations against a web application's authentication interface until valid credentials are discovered.",
+
+    "symptoms": [
+      "Numerous failed login attempts",
+      "High authentication request rate",
+      "Repeated POST requests to login endpoint",
+      "Account lockouts",
+      "Abnormal login traffic"
+    ],
+
+    "impact": "Successful attacks may result in unauthorized account access, privilege escalation, and data compromise.",
+
+    "detection": [
+      "Large number of failed login attempts",
+      "Repeated authentication requests from one IP",
+      "Frequent POST requests to authentication pages",
+      "Account lockout events"
+    ],
+
+    "mitigation": [
+      "Enable Multi-Factor Authentication",
+      "Implement account lockout",
+      "Rate limit login attempts",
+      "Use CAPTCHA",
+      "Monitor authentication logs"
+    ],
+
+    "mitre_attack": [
+      "T1110"
+    ],
+
+    "ports": [
+      "80",
+      "443"
+    ],
+
+    "protocols": [
+      "HTTP",
+      "HTTPS"
+    ],
+
+    "ioc": [
+      "Repeated failed logins",
+      "Multiple authentication requests",
+      "Single IP targeting many accounts"
+    ],
+
+    "references": [
+      "https://attack.mitre.org/techniques/T1110/",
+      "https://owasp.org/",
+      "https://www.cisa.gov/"
+    ]
+  },
+  
+  "Web Attack XSS": {
+    "category": "Web Application Attack",
+
+    "severity": "High",
+
+    "description": "Cross-Site Scripting (XSS) injects malicious scripts into trusted web pages. The script executes in the victim's browser, allowing attackers to steal cookies, session tokens, or manipulate page content.",
+
+    "symptoms": [
+      "Unexpected JavaScript execution",
+      "Modified webpage content",
+      "Stolen user sessions",
+      "Abnormal browser redirects"
+    ],
+
+    "impact": "Session hijacking, credential theft, phishing, and malicious client-side code execution.",
+
+    "detection": [
+      "Script tags in user input",
+      "Encoded JavaScript payloads",
+      "Unexpected HTML injection",
+      "Browser security alerts"
+    ],
+
+    "mitigation": [
+      "Validate user input",
+      "Escape HTML output",
+      "Implement Content Security Policy (CSP)",
+      "Use secure cookies",
+      "Perform output encoding"
+    ],
+
+    "mitre_attack": [
+      "T1059.007"
+    ],
+
+    "ports": [
+      "80",
+      "443"
+    ],
+
+    "protocols": [
+      "HTTP",
+      "HTTPS"
+    ],
+
+    "ioc": [
+      "<script> payloads",
+      "JavaScript execution",
+      "Injected HTML",
+      "Modified DOM"
+    ],
+
+    "references": [
+      "https://owasp.org/www-community/attacks/xss/",
+      "https://attack.mitre.org/",
+      "https://www.cisa.gov/"
+    ]
+  },
+  
+  "Web Attack SQL Injection": {
+    "category": "Injection Attack",
+
+    "severity": "Critical",
+
+    "description": "SQL Injection exploits improperly validated user input to execute malicious SQL commands against backend databases.",
+
+    "symptoms": [
+      "Database errors",
+      "Unexpected SQL responses",
+      "Unauthorized data access",
+      "Application crashes"
+    ],
+
+    "impact": "Data theft, authentication bypass, database modification, and complete compromise of sensitive information.",
+
+    "detection": [
+      "SQL keywords in user input",
+      "Unexpected database queries",
+      "Database error messages",
+      "Suspicious URL parameters"
+    ],
+
+    "mitigation": [
+      "Use parameterized queries",
+      "Implement prepared statements",
+      "Validate user input",
+      "Use least privilege database accounts",
+      "Deploy Web Application Firewall"
+    ],
+
+    "mitre_attack": [
+      "T1190"
+    ],
+
+    "ports": [
+      "80",
+      "443"
+    ],
+
+    "protocols": [
+      "HTTP",
+      "HTTPS",
+      "SQL"
+    ],
+
+    "ioc": [
+      "' OR 1=1 --",
+      "UNION SELECT",
+      "xp_cmdshell",
+      "Database error responses"
+    ],
+
+    "references": [
+      "https://owasp.org/www-community/attacks/SQL_Injection",
+      "https://attack.mitre.org/techniques/T1190/",
+      "https://www.cisa.gov/"
+    ]
+  },
+  
+  "Infiltration": {
+    "category": "Initial Access",
+
+    "severity": "Critical",
+
+    "description": "Infiltration attacks involve an attacker gaining unauthorized access to an internal network using compromised systems or malicious software, often serving as the starting point for later attack stages.",
+
+    "symptoms": [
+      "Unexpected outbound communication",
+      "Unauthorized internal access",
+      "Unknown executable files",
+      "Privilege misuse"
+    ],
+
+    "impact": "Compromise of internal systems, lateral movement, malware deployment, and sensitive data exposure.",
+
+    "detection": [
+      "Unexpected internal communication",
+      "Unknown processes",
+      "Suspicious PowerShell activity",
+      "Abnormal authentication events"
+    ],
+
+    "mitigation": [
+      "Apply endpoint protection",
+      "Network segmentation",
+      "Least privilege access",
+      "Continuous monitoring",
+      "Patch vulnerable systems"
+    ],
+
+    "mitre_attack": [
+      "T1078",
+      "T1105"
+    ],
+
+    "ports": [
+      "Any"
+    ],
+
+    "protocols": [
+      "TCP",
+      "UDP",
+      "HTTP",
+      "HTTPS"
+    ],
+
+    "ioc": [
+      "Suspicious internal connections",
+      "Unknown binaries",
+      "Privilege escalation",
+      "Remote payload download"
+    ],
+
+    "references": [
+      "https://attack.mitre.org/",
+      "https://www.cisa.gov/",
+      "https://owasp.org/"
+    ]
+  },
+  
+  "Heartbleed": {
+    "category": "Information Disclosure",
+
+    "severity": "Critical",
+
+    "description": "Heartbleed is a vulnerability in OpenSSL that allows attackers to read sensitive information from server memory without authentication.",
+
+    "symptoms": [
+      "Unexpected TLS heartbeat requests",
+      "Sensitive memory disclosure",
+      "Abnormal TLS traffic",
+      "Credential leakage"
+    ],
+
+    "impact": "Exposure of passwords, private keys, session tokens, and confidential information.",
+
+    "detection": [
+      "Malformed TLS heartbeat packets",
+      "Unexpected memory disclosure",
+      "OpenSSL vulnerability scans",
+      "Abnormal encrypted traffic"
+    ],
+
+    "mitigation": [
+      "Upgrade OpenSSL",
+      "Replace compromised certificates",
+      "Rotate credentials",
+      "Patch vulnerable systems",
+      "Disable vulnerable heartbeat extension"
+    ],
+
+    "mitre_attack": [
+      "T1190"
+    ],
+
+    "ports": [
+      "443"
+    ],
+
+    "protocols": [
+      "TLS",
+      "HTTPS"
+    ],
+
+    "ioc": [
+      "Malformed heartbeat requests",
+      "Memory disclosure",
+      "TLS anomalies",
+      "Certificate compromise"
+    ],
+
+    "references": [
+      "https://heartbleed.com/",
+      "https://attack.mitre.org/",
+      "https://www.cisa.gov/"
+    ]
+  }
+}

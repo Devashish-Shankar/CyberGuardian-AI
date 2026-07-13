@@ -1,20 +1,20 @@
 """
 CyberGuardian AI
 
-MITRE Loader
+Mitigation Engine
 
 Responsibility
 --------------
-Extract MITRE ATT&CK technique IDs
+Extract mitigation recommendations
 from an attack object.
 """
 
 from __future__ import annotations
 
 
-class MitreLoader:
+class MitigationEngine:
     """
-    Returns MITRE ATT&CK technique IDs.
+    Returns mitigation steps for an attack.
     """
 
     def get(
@@ -32,16 +32,16 @@ class MitreLoader:
                 "Attack must be a dictionary."
             )
 
-        mitre = attack.get("mitre_attack")
+        mitigation = attack.get("mitigation")
 
-        if mitre is None:
+        if mitigation is None:
             raise ValueError(
-                "MITRE information not found."
+                "Mitigation not found."
             )
 
-        if not isinstance(mitre, list):
+        if not isinstance(mitigation, list):
             raise TypeError(
-                "MITRE ATT&CK field must be a list."
+                "Mitigation must be a list."
             )
 
-        return mitre
+        return mitigation
