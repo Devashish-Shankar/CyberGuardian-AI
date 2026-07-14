@@ -1,3 +1,9 @@
+"""
+CyberGuardian AI
+
+LLM Factory
+"""
+
 from src.config.config import LLM_PROVIDER
 
 from src.llm.groq_llm import GroqLLM
@@ -6,9 +12,18 @@ from src.llm.groq_llm import GroqLLM
 class LLMFactory:
 
     @staticmethod
-    def get_llm():
+    def create():
 
-        if LLM_PROVIDER.lower() == "groq":
+        if not LLM_PROVIDER:
+
+            raise ValueError(
+                "LLM_PROVIDER is not configured."
+            )
+
+        provider = LLM_PROVIDER.lower().strip()
+
+        if provider == "groq":
+
             return GroqLLM()
 
         raise ValueError(

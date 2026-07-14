@@ -1,13 +1,17 @@
 """
+CyberGuardian AI
+
 Groq LLM Provider
 
 Implements BaseLLM
 """
 
+from __future__ import annotations
+
 from groq import Groq
 
-from prompts.security_prompt import SYSTEM_PROMPT
 from src.llm.base_llm import BaseLLM
+from src.prompts.security_prompt import SYSTEM_PROMPT
 from src.config.config import (
     GROQ_API_KEY,
     MODEL_NAME
@@ -15,39 +19,78 @@ from src.config.config import (
 
 
 class GroqLLM(BaseLLM):
+    """
+    Groq implementation of BaseLLM.
+    """
 
-    def __init__(self):
+    def __init__(self) -> None:
 
-        self.client = Groq(
+        if not GROQ_API_KEY:
+            raise ValueError(
+                "GROQ_API_KEY not found in environment."
+            )
+
+        self.client: Groq = Groq(
             api_key=GROQ_API_KEY
         )
 
-        self.model = MODEL_NAME
+        self.model: str = MODEL_NAME
 
     def generate(
         self,
         prompt: str
     ) -> str:
+        """
+        Generate response from Groq LLM.
 
-        response = self.client.chat.completions.create(
+        Parameters
+        ----------
+        prompt : str
+            User prompt.
 
-            model=self.model,
+        Returns
+        -------
+        str
+            Generated response.
+        """
 
-            messages = [
-                {
-                    "role": "system",
-                    "content": SYSTEM_PROMPT
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
+        if not isinstance(prompt, str):
+            raise TypeError(
+                "Prompt must be a string."
+            )
 
-            temperature=0.2,
+        if not prompt.strip():
+            raise ValueError(
+                "Prompt cannot be empty."
+            )
 
-            max_tokens=1200
+        try:
 
-        )
+            response = self.client.chat.completions.create(
 
-        return response.choices[0].message.content
+                model=self.model,
+
+                messages=[
+                    {
+                        "role": "system",
+                        "content": SYSTEM_PROMPT
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+
+                temperature=0.2,
+
+                max_tokens=1200
+
+            )
+
+            return response.choices[0].message.content.strip()
+
+        except Exception as e:
+
+            raise RuntimeError(
+                f"Groq generation failed: {str(e)}"
+            ) from e

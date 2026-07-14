@@ -1,13 +1,18 @@
 """
-Base LLM Interface
+CyberGuardian AI
 
-Every provider must inherit this class.
+Base LLM Interface
 """
+
+from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
 
 class BaseLLM(ABC):
+    """
+    Abstract interface for all LLM providers.
+    """
 
     @abstractmethod
     def generate(
@@ -15,6 +20,6 @@ class BaseLLM(ABC):
         prompt: str
     ) -> str:
         """
-        Generate response from LLM.
+        Generate a response from the LLM.
         """
         pass
