@@ -1,80 +1,142 @@
 """
+==========================================================
 CyberGuardian AI
 
 Supervisor Agent
 
-This is the orchestrator of the complete AI pipeline.
+Responsible for orchestrating the complete AI pipeline.
+
+Author: Devashish
+==========================================================
 """
 
-from src.agents.binary_agent import BinaryDetectionAgent
-from src.agents.multiclass_agent import MultiClassDetectionAgent
-from src.agents.explanation_agent import ExplanationAgent
-from src.agents.security_analyst_agent import SecurityAnalystAgent
+from __future__ import annotations
+
+import pandas as pd
+
+from src.agents.base_agent import BaseAgent
+from src.agents.prediction_agent import PredictionAgent
+from src.agents.knowledge_agent import KnowledgeAgent
+from src.agents.explainability_agent import ExplainabilityAgent
+from src.agents.analyst_agent import AnalystAgent
+from src.agents.incident_agent import IncidentAgent
 
 
-class SupervisorAgent:
+class SupervisorAgent(BaseAgent):
+    """
+    Orchestrates the complete CyberGuardian AI pipeline.
+    """
 
-    def __init__(self):
+    def __init__(self) -> None:
 
-        self.binary_agent = BinaryDetectionAgent()
+        self.prediction_agent = PredictionAgent()
 
-        self.multiclass_agent = MultiClassDetectionAgent()
+        self.knowledge_agent = KnowledgeAgent()
 
-        self.explanation_agent = ExplanationAgent()
+        self.explainability_agent = ExplainabilityAgent()
 
-        self.security_agent = SecurityAnalystAgent()
+        self.analyst_agent = AnalystAgent()
 
-    def analyze(self, sample):
+        self.incident_agent = IncidentAgent()
 
-        print("Running Binary Detection...")
+    # =====================================================
+    # Public API
+    # =====================================================
 
-        binary_result = self.binary_agent.detect(sample)
+    def run(
+        self,
+        sample: pd.DataFrame
+    ) -> dict:
+        """
+        Execute the complete CyberGuardian AI pipeline.
+        """
 
-        if binary_result["prediction"] == 0:
+        # -------------------------------------------------
+        # Step 1 : Prediction
+        # -------------------------------------------------
+
+        prediction = self.prediction_agent.run(
+            sample
+        )
+
+        # -------------------------------------------------
+        # Benign Traffic
+        # -------------------------------------------------
+
+        if not prediction["is_attack"]:
 
             return {
 
-                "status": "Safe",
+                "status": "safe",
 
-                "message": "No cyber attack detected.",
+                "prediction": prediction,
 
-                "confidence": round(
-                    binary_result["confidence"] * 100,
-                    2
-                )
+                "knowledge": None,
+
+                "explainability": None,
+
+                "analysis": None,
+
+                "incident_report": None
 
             }
 
-        print("Attack Detected")
+        # -------------------------------------------------
+        # Step 2 : Knowledge
+        # -------------------------------------------------
 
-        print("Running Multi-Class Detection...")
+        knowledge = self.knowledge_agent.run(
+            prediction
+        )
 
-        attack_result = self.multiclass_agent.detect(sample)
+        # -------------------------------------------------
+        # Step 3 : Explainability
+        # -------------------------------------------------
 
-        print("Generating Threat Intelligence...")
+        explainability = self.explainability_agent.run(
+            sample
+        )
 
-        explanation = self.explanation_agent.explain(
+        # -------------------------------------------------
+        # Step 4 : AI Analysis
+        # -------------------------------------------------
 
-            attack_name=attack_result["attack_name"],
+        analysis = self.analyst_agent.run(
 
-            confidence=attack_result["confidence"] / 100
+            knowledge,
+
+            explainability
 
         )
 
-        print("Generating AI Security Report...")
+        # -------------------------------------------------
+        # Step 5 : Incident Report
+        # -------------------------------------------------
 
-        analyst_report = self.security_agent.analyze(
-            explanation
+        incident_report = self.incident_agent.run(
+
+            knowledge,
+
+            explainability
+
         )
+
+        # -------------------------------------------------
+        # Final Response
+        # -------------------------------------------------
 
         return {
 
-            "binary_detection": binary_result,
+            "status": "attack_detected",
 
-            "attack_prediction": attack_result,
+            "prediction": prediction,
 
-            "threat_intelligence": explanation,
+            "knowledge": knowledge,
 
-            "security_report": analyst_report
+            "explainability": explainability,
+
+            "analysis": analysis,
+
+            "incident_report": incident_report
 
         }
